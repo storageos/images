@@ -11,13 +11,12 @@ env:
     - secure: I98Jc3Q37j/3x8X4rtK1tR0PARQuBTUuhSuQs+VgLna6Bg1X7z8TD/rcmccmLJjR+M/LVMKTTST8W2o3zTLJBfjE01lwFYbjpXFfyKeEYZWrnVewpaVKBeHO5RUXxhpdWckS0QOsEWn1VBdJCLz+71inWA1gdOF/ZrJJHsAF/Nh4TnvTOICYw0a3M/4MZWr86ZVpWCRI/aMaWDrm/tJcB05xZqGS960dSw0oXHe3FFMNX/yJMVTjxUIemWeXcg6Y8c7JOKY5IOQDPfMLjn/DB19bCfpkp+frV1nI/6YvSYPECL6M+FEiG6zeET6YPNtXIfq6w5pZBoB4QpTDv5EgDpbIuaXwLjetOIybQvq8dYWoSlKz2DJ+8XV5KXvknqKY5t2HaVs7a3wPBAKJ+5arcmqsRcA6zF8aacJs5IUfc3VYpd/VTop92PsvvOi6h4Rtxm35/ZQ/58lAi6n0RJyNWfkjis2KnJU+h4DtKv6XRVZS0dxtKunYRPDLOO6MqldJMevbFH5JwZYrBXrzcZIHWsRKxMSGy1MOMavuESxpmTIZBan/RyN0uwTnvnqr8jo9W6MBgYMR4Sj1aVa1WGP+BVebQob1OeJZUgJM/AA28q94qE79FzvVVN382IF/akAbDPBHoRGHGZJ8jNuUVRjiHXMzZH7ZozodpB5DbPp5tyU=
     - secure: BIrhFXjwKHyJfbDhWjG1ELGOmpH+EycKSXlDAYYzr55DF5i6vOM/0zGfya1zoUR+VqhoS9arewafbCpQ4lyKymDexHIC1KXoCamZGTzy34vaTTF5o08as8OR2dcOEu75hYj6XihEKQwirrJ9a6BlhdsBwaGiww9nYTR0miP864FAFZnnzcQZNZnnsus7XPtEKurU3cfMQ8ZC3ClreMCkwjj+SBip5bmXaLzweYl6n2tPXdxhAqSVMsHa/dwU1yf7ujQh1IbFDX6AL/7mIU4jnypdDDFnIy5JbdRfqjPujOof8UW1OWxcZbOJUusIcnf6S9oC9pnqpJEj08OZkztIg+fKtOyiqDH8hPqvRC0e8x3QLZhPMCT256aSfVDa+lGbHVlJb6R6yvVgBC0aFm/fUjqcRfPxuYJBAn3sg2EglQTWfscsnhVBVjir0xZiilIfFs+kmUOsGEtnEdUH2JYl/C7scCGM0jHXiXtPccNrjAfCttvMckmw9JlJKvGnN5Tfmk+wi4OxoDSQwHI0emTi1HhGSnLKys6PCXb0R0WnT+V2dUCsF5fzszxxk/DpSWLE4VsC7Got7JPdAKxV/DkyEJk5pRjBfE9GiqhM/QEabx6Z/HmGgJ9w72Lx5Ih/pjCEfyMsQ7eVSPkZ6FqoCscexQ4MdgdL6y5clFjY2Wcsfd4=
 before_install:
-  - openssl aes-256-cbc -K $encrypted_6cd5e44028b6_key -iv $encrypted_6cd5e44028b6_iv
-    -in key.enc -out key -d
-  - source key
+  - openssl aes-256-cbc -K $encrypted_6cd5e44028b6_key -iv $encrypted_6cd5e44028b6_iv -in key.enc -out key -d
 script:
   - docker build . -f kube-scheduler/Dockerfile -t storageos/kube-scheduler:latest
 deploy:
   - provider: script
     script: bash publish.sh
+    skip_cleanup: true
     on:
       tags: true
