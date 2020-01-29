@@ -1,0 +1,16 @@
+language: go
+dist: bionic
+services:
+  - docker
+go:
+  - 1.13.5
+env:
+  global:
+    - CONTAINER_TAG=v1.17.0
+script:
+  - docker build . -f kube-scheduler/Dockerfile -t storageos/kube-scheduler:latest
+deploy:
+  - provider: script
+    script: bash publish.sh
+    on:
+      tags: true
