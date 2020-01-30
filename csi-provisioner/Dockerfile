@@ -34,4 +34,4 @@ LABEL name="csi-provisioner" \
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/external-provisioner/bin/csi-provisioner /csi-provisioner
 COPY --from=build /go/src/github.com/storageos/images/external-provisioner/LICENSE /licenses/
-CMD ["/csi-provisioner"]
+ENTRYPOINT ["/csi-provisioner"]
