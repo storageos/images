@@ -2,7 +2,8 @@ FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/node-driver-registrar
 ENV GIT_VERSION=v1.2.0
 WORKDIR /go/src/github.com/storageos/images/csi-node-driver-registrar
-COPY build.sh /
+COPY LICENSE .
+COPY csi-node-driver-registrar/build.sh /
 
 # Clone upstream with full history and checkout to the forked branch to retain
 # correct version tag used in the build flag.
@@ -30,5 +31,5 @@ LABEL name="csi-node-driver-registrar" \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/node-driver-registrar/bin/csi-node-driver-registrar /csi-node-driver-registrar
-COPY --from=build /go/src/github.com/kubernetes-csi/node-driver-registrar/LICENSE /licenses/
+COPY --from=build  /go/src/github.com/storageos/images/csi-node-driver-registrar/LICENSE /licenses/
 ENTRYPOINT ["/csi-node-driver-registrar"]
