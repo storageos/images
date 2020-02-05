@@ -3,17 +3,13 @@ ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/cluster-driver-registrar
 ENV GIT_VERSION=v1.0.1
 WORKDIR /go/src/github.com/storageos/images/csi-cluster-driver-registrar
 COPY LICENSE .
-COPY csi-cluster-driver-registrar/build.sh /
 
 # Clone upstream with full history and checkout to the forked branch to retain
 # correct version tag used in the build flag.
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/cluster-driver-registrar
 RUN cd "$GOPATH/src/github.com/kubernetes-csi/cluster-driver-registrar" \
     && git checkout $GIT_VERSION \
-    && bash /build.sh
-    # The default make target builds linux and windows binaries together. Use
-    # make when the build server has enough resources.
-    # && make
+    && make
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL name="csi-cluster-driver-registrar" \
