@@ -1,7 +1,7 @@
 FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-provisioner
 ENV GIT_FORK_REPO=https://github.com/storageos/external-provisioner
-ENV GIT_BRANCH=53f0949-patched
+ENV GIT_BRANCH=v1.6.0-patched
 WORKDIR /go/src/github.com/storageos/images/external-provisioner
 COPY LICENSE .
 COPY csi-provisioner/build.sh /
@@ -21,7 +21,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL name="csi-provisioner" \
     maintainer="support@storageos.com" \
     vendor="StorageOS" \
-    version="53f0949-patched" \
+    version="v1.6.0-patched" \
     release="1" \
     distribution-scope="public" \
     architecture="x86_64" \
