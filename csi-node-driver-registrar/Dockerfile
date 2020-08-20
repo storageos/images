@@ -30,5 +30,5 @@ LABEL name="csi-node-driver-registrar" \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/node-driver-registrar/bin/csi-node-driver-registrar /csi-node-driver-registrar
-COPY --from=build  /go/src/github.com/kubernetes-csi/node-driver-registrar/LICENSE /licenses/
+COPY --from=build /go/src/github.com/kubernetes-csi/node-driver-registrar/LICENSE /licenses/
 ENTRYPOINT ["/csi-node-driver-registrar"]

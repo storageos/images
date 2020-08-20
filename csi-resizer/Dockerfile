@@ -22,12 +22,12 @@ LABEL name="csi-resizer" \
     distribution-scope="public" \
     architecture="x86_64" \
     url="https://docs.storageos.com" \
-    io.k8s.description="csi-resizer registers the CSI driver with kubelet." \
+    io.k8s.description="csi-resizer handles volume expansion operations." \
     io.k8s.display-name="csi-resizer" \
     io.openshift.tags="" \
     summary="The CSI Resizer watches the Kubernetes API for volume expansion requests." \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/external-resizer/bin/csi-resizer /csi-resizer
-COPY --from=build  /go/src/github.com/kubernetes-csi/external-resizer/LICENSE /licenses/
+COPY --from=build /go/src/github.com/kubernetes-csi/external-resizer/LICENSE /licenses/
 ENTRYPOINT ["/csi-resizer"]
