@@ -3,8 +3,8 @@ ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-provisioner
 ENV GIT_FORK_REPO=https://github.com/storageos/external-provisioner
 ENV GIT_BRANCH=v1.6.0-patched
 WORKDIR /go/src/github.com/storageos/images/external-provisioner
-COPY LICENSE .
 COPY csi-provisioner/build.sh /
+
 # Clone upstream with full history and checkout to the forked branch to retain
 # correct version tag used in the build flag.
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/external-provisioner
@@ -33,5 +33,5 @@ LABEL name="csi-provisioner" \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/external-provisioner/bin/csi-provisioner /csi-provisioner
-COPY --from=build /go/src/github.com/storageos/images/external-provisioner/LICENSE /licenses/
+COPY --from=build /go/src/github.com/kubernetes-csi/external-provisioner/LICENSE /licenses/
 ENTRYPOINT ["/csi-provisioner"]

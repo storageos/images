@@ -2,7 +2,7 @@ FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-attacher
 ENV GIT_TAG=v1.2.1
 WORKDIR /go/src/github.com/storageos/images/external-attacher
-COPY LICENSE .
+
 # Clone upstream and build from target tag directly.
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/external-attacher
 RUN cd "$GOPATH/src/github.com/kubernetes-csi/external-attacher" \
@@ -25,5 +25,5 @@ LABEL name="csi-attacher" \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/external-attacher/bin/csi-attacher /csi-attacher
-COPY --from=build /go/src/github.com/storageos/images/external-attacher/LICENSE /licenses/
+COPY --from=build /go/src/github.com/kubernetes-csi/external-attacher/LICENSE /licenses/
 ENTRYPOINT ["/csi-attacher"]
