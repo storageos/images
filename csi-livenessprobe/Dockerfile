@@ -2,7 +2,7 @@ FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/livenessprobe
 ENV GIT_TAG=v1.1.0
 WORKDIR /go/src/github.com/storageos/images/csi-livenessprobe
-COPY LICENSE .
+
 # Clone upstream and build from target tag directly. 
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/livenessprobe
 RUN cd "$GOPATH/src/github.com/kubernetes-csi/livenessprobe" \
@@ -25,5 +25,5 @@ LABEL name="csi-livenessprobe" \
     description="This container is not intended to be run manually. Instead, use the StorageOS Cluster Operator to install and manage StorageOS."
 RUN mkdir -p /licenses
 COPY --from=build /go/src/github.com/kubernetes-csi/livenessprobe/bin/livenessprobe /livenessprobe
-COPY --from=build /go/src/github.com/storageos/images/csi-livenessprobe/LICENSE /licenses/
+COPY --from=build /go/src/github.com/kubernetes-csi/livenessprobe/LICENSE /licenses/
 ENTRYPOINT ["/livenessprobe"]
