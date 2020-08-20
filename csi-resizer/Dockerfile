@@ -1,6 +1,8 @@
 FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-resizer
 ENV GIT_VERSION=v0.5.0
+# Red Hat build service was not auto-creating WORKDIR, create it.
+RUN mkdir -p /go/src/github.com/storageos/images/csi-resizer
 WORKDIR /go/src/github.com/storageos/images/csi-resizer
 
 # Clone upstream with full history and checkout to the forked branch to retain
