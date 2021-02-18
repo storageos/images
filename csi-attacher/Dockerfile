@@ -1,6 +1,6 @@
 FROM golang:1.13.5 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-attacher
-ENV GIT_TAG=v1.2.1
+ENV GIT_TAG=v3.1.0
 WORKDIR /go/src/github.com/storageos/images/external-attacher
 
 # Clone upstream and build from target tag directly.
@@ -13,7 +13,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL name="csi-attacher" \
     maintainer="support@storageos.com" \
     vendor="StorageOS" \
-    version="v1.2.1" \
+    version="v3.1.0" \
     release="1" \
     distribution-scope="public" \
     architecture="x86_64" \
