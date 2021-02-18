@@ -1,7 +1,9 @@
-FROM golang:1.13.5 AS build
+FROM golang:1.15.8 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/external-attacher
 ENV GIT_TAG=v3.1.0
-WORKDIR /go/src/github.com/storageos/images/external-attacher
+
+# WORKDIR is not getting created, do it manually.
+RUN mkdir -p "$GOPATH/src/github.com/kubernetes-csi/external-attacher"
 
 # Clone upstream and build from target tag directly.
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/external-attacher
