@@ -1,24 +1,22 @@
-FROM golang:1.13.5 AS build
+FROM golang:1.15.11 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/node-driver-registrar
-ENV GIT_VERSION=v1.2.0
-WORKDIR /go/src/github.com/storageos/images/csi-node-driver-registrar
-COPY csi-node-driver-registrar/build.sh /
+ENV GIT_VERSION=v2.1.0
+
+# WORKDIR is not getting created on RH build service, create it manually.
+RUN mkdir -p "$GOPATH/src/github.com/kubernetes-csi/node-driver-registrar"
 
 # Clone upstream with full history and checkout to the forked branch to retain
 # correct version tag used in the build flag.
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/node-driver-registrar
 RUN cd "$GOPATH/src/github.com/kubernetes-csi/node-driver-registrar" \
     && git checkout $GIT_VERSION \
-    && bash /build.sh
-    # The default make target builds linux and windows binaries together. Use
-    # make when the build server has enough resources.
-    # && make
+    && make
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL name="csi-node-driver-registrar" \
     maintainer="support@storageos.com" \
     vendor="StorageOS" \
-    version="v1.2.0" \
+    version="v2.1.0" \
     release="1" \
     distribution-scope="public" \
     architecture="x86_64" \
