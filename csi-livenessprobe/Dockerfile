@@ -1,7 +1,9 @@
-FROM golang:1.13.5 AS build
+FROM golang:1.15.11 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/livenessprobe
-ENV GIT_TAG=v1.1.0
-WORKDIR /go/src/github.com/storageos/images/csi-livenessprobe
+ENV GIT_TAG=v2.2.0
+
+# WORKDIR is not getting created on RH build service, create it manually.
+RUN mkdir -p "$GOPATH/src/github.com/kubernetes-csi/livenessprobe"
 
 # Clone upstream and build from target tag directly. 
 RUN git clone $GIT_UPSTREAM_REPO $GOPATH/src/github.com/kubernetes-csi/livenessprobe
@@ -13,7 +15,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL name="csi-livenessprobe" \
     maintainer="support@storageos.com" \
     vendor="StorageOS" \
-    version="v1.1.0" \
+    version="v2.2.0" \
     release="1" \
     distribution-scope="public" \
     architecture="x86_64" \
