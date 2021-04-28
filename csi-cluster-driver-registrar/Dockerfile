@@ -1,7 +1,9 @@
-FROM golang:1.13.5 AS build
+FROM golang:1.15.11 AS build
 ENV GIT_UPSTREAM_REPO=https://github.com/kubernetes-csi/cluster-driver-registrar
 ENV GIT_VERSION=v1.0.1
-WORKDIR /go/src/github.com/storageos/images/csi-cluster-driver-registrar
+
+# WORKDIR is not getting created on RH build service, create it manually.
+RUN mkdir -p "$GOPATH/src/github.com/kubernetes-csi/cluster-driver-registrar"
 
 # Clone upstream with full history and checkout to the forked branch to retain
 # correct version tag used in the build flag.
